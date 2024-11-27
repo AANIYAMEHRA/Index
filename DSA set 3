@@ -1,0 +1,102 @@
+/*1 In the theory of numbers, square free numbers have a special place.  A square free number is one that is not divisible by a perfect square (other than 1).  Thus 72 is divisible by 36 (a perfect square), and is not a square free number, but 70 has factors 1, 2, 5, 7, 10, 14, 35 and 70.  As none of these are perfect squares (other than 1), 70 is a square free number.
+
+For some algorithms, it is important to find out the square free numbers that divide a number.  Note that 1 is not considered a square free number. 
+
+In this problem, you are asked to write a program to find the number of square free numbers that divide a given number.*/
+#include <stdio.h>
+#include <math.h>
+int main()
+{
+    long int n;
+    double sqnum;
+    long int i,j=0,flag,chksqr,temp[10000];
+  	int count=0,k;
+  	printf("Enter the number:");
+    scanf("%ld",&n);
+    
+    for(i=2;i<=n/2;i++)
+    {
+        if(n%i==0)
+        {    
+            count++;
+            sqnum=sqrt(i);
+            chksqr=sqnum;
+            if(chksqr==sqnum)
+            {
+                count--;
+                temp[j]=i;
+                j++;
+            }
+            else
+            {
+                for(k=0;k<j;k++) { if(i>temp[k] && j!=0)
+                    {
+                        if(i%temp[k]==0)
+                        {	
+                          	count--;
+                        	k=j+1;
+                        }
+                    }
+                    else
+                        break;
+                }
+            }
+        }
+    }
+
+    printf("%d",count);
+    return 0;
+}
+/*2Given an array A of size N where, 1<= N <= 10^5. The task is to find the OR of all possible
+sub-arrays of A and then the OR of all these results.
+*/
+/* C program to print subarray  
+   with sum as given sum */
+#include <stdio.h> 
+  
+/* Returns true if the there is a  
+   subarray of arr[] with a sum  
+   equal to 'sum' otherwise returns  
+   false.  Also, prints the result */
+int subArraySum(int arr[], int n,  
+                int sum) 
+{ 
+    int curr_sum, i, j; 
+  
+    // Pick a starting point 
+    for (i = 0; i < n; i++)  
+    { 
+        curr_sum = arr[i]; 
+  
+        // Try all subarrays starting  
+        // with 'i' 
+        for (j = i + 1; j <= n; j++)  
+        { 
+            if (curr_sum == sum)  
+            { 
+                printf( 
+                "Sum found between indexes %d and %d", 
+                    i, j - 1); 
+                return 1; 
+            } 
+            if (curr_sum > sum || j == n) 
+                break; 
+            curr_sum = curr_sum + arr[j]; 
+        } 
+    } 
+  
+    printf("No subarray found"); 
+    return 0; 
+} 
+  
+// Driver code 
+int main() 
+{ 
+    int arr[] = {15, 2, 4, 8,  
+                 9, 5, 10, 23}; 
+    int n = sizeof(arr) / sizeof(arr[0]); 
+    int sum = 23; 
+    subArraySum(arr, n, sum); 
+    return 0; 
+} 
+
