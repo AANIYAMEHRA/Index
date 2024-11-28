@@ -99,4 +99,55 @@ int main()
     subArraySum(arr, n, sum); 
     return 0; 
 } 
+3. Given an array and an integer K, find the maximum for each and every contiguoussubarray of size K.
+// C program for the above approach
+#include <stdio.h>
+
+void printKMax(int arr[], int N, int K)
+{
+    int j, max;
+
+    for (int i = 0; i <= N - K; i++) {
+        max = arr[i];
+
+        for (j = 1; j < K; j++) {
+            if (arr[i + j] > max)
+                max = arr[i + j];
+        }
+        printf("%d ", max);
+    }
+}
+
+// Driver's Code
+int main()
+{
+    int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    int N = sizeof(arr) / sizeof(arr[0]);
+    int K = 3;
+  
+      // Function call
+    printKMax(arr, N, K);
+    return 0;
+}
+4. Given a string s containing only three types of characters:'(',')' and '*', return true is s valid.
+class Solution {
+public:
+    bool checkValidString(string s) {
+        int n = s.size();
+        vector<vector<bool>> dp(n, vector<bool>(n));
+        for (int i = 0; i < n; ++i) {
+            dp[i][i] = s[i] == '*';
+        }
+        for (int i = n - 2; i >= 0; --i) {
+            for (int j = i + 1; j < n; ++j) {
+                char a = s[i], b = s[j];
+                dp[i][j] = (a == '(' || a == '*') && (b == '*' || b == ')') && (i + 1 == j || dp[i + 1][j - 1]);
+                for (int k = i; k < j && !dp[i][j]; ++k) {
+                    dp[i][j] = dp[i][k] && dp[k + 1][j];
+                }
+            }
+        }
+        return dp[0][n - 1];
+    }
+};
 
